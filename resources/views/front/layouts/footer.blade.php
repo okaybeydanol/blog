@@ -71,7 +71,7 @@
     <div class="section-inner">
         <div class="footer-credits">
             <p class="footer-copyright">&copy;
-                2020 <a href="/">Görkem Demir</a>
+                {{ date('Y') }} <a href="/">Görkem Demir</a>
             </p>
             <p class="powered-by-okay">
                 <a href="https://www.linkedin.com/in/okaybeydanol/">

@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\back\Dashboard;
+use App\Http\Controllers\back\Auth;
 use App\Http\Controllers\front\Homepage;
 use Illuminate\Support\Facades\Route;
 
@@ -19,6 +21,9 @@ use Illuminate\Support\Facades\Route;
 | Back Web Routes
 |--------------------------------------------------------------------------
 */
+
+Route::get('admin/panel', [Dashboard::class, 'index'])->name('dashboard');
+Route::get('admin/giris', [Auth::class, 'login'])->name('admin.login');
 
 /*
 |--------------------------------------------------------------------------
