@@ -14,6 +14,7 @@
     <link href="{{ asset('back') }}/assets/css/authentication/form-2.css" rel="stylesheet" type="text/css" />
     <!-- END GLOBAL MANDATORY STYLES -->
     <link rel="stylesheet" type="text/css" href="{{ asset('back') }}/assets/css/forms/theme-checkbox-radio.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('back') }}/assets/css/elements/alerts.css">
 </head>
 
 <body class="form">
@@ -28,7 +29,20 @@
                         <h1 class="">Giriş Yap</h1>
                         <p class="">Kullanıcı adı ve şifreyi yazıp girişe basın.</p>
 
-                        <form class="text-left">
+                        @if ($errors->any())
+                        <div class="alert alert-outline-danger mb-4" role="alert"> <button type="button" class="close"
+                                data-dismiss="alert" aria-label="Close"> <svg xmlns="http://www.w3.org/2000/svg"
+                                    width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                    class="feather feather-x close" data-dismiss="alert">
+                                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                                </svg></button><i class="flaticon-cancel-12 close"
+                                data-dismiss="alert"></i>{{ $errors->first() }} </div>
+
+                        @endif
+                        <form method="POST" action="{{ route('admin.login.post') }}" class="text-left">
+                            @csrf
                             <div class="form">
 
                                 <div id="username-field" class="field-wrapper input">
@@ -39,7 +53,7 @@
                                         <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                                         <circle cx="12" cy="7" r="4"></circle>
                                     </svg>
-                                    <input id="username" name="username" type="text" class="form-control"
+                                    <input id="username" name="name" type="text" class="form-control"
                                         placeholder="gorkemdemir">
                                 </div>
 
@@ -89,6 +103,7 @@
 
     <!-- END GLOBAL MANDATORY SCRIPTS -->
     <script src="{{ asset('back') }}/assets/js/authentication/form-2.js"></script>
+    <script src="{{ asset('back') }}/plugins/highlight/highlight.pack.js"></script>
 
 </body>
 

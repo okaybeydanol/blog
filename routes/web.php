@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\back\Dashboard;
 use App\Http\Controllers\back\Auth;
+use App\Http\Controllers\back\AuthController;
 use App\Http\Controllers\front\Homepage;
 use Illuminate\Support\Facades\Route;
 
@@ -22,9 +23,15 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 */
 
-Route::get('admin/panel', [Dashboard::class, 'index'])->name('dashboard');
-Route::get('admin/giris', [Auth::class, 'login'])->name('admin.login');
+Route::prefix('admin')->name('admin.')->middleware('isLogin')->group(function () {
+    Route::get('giris', [AuthController::class, 'login'])->name('login');
+    Route::post('giris', [AuthController::class, 'loginPost'])->name('login.post');
+});
 
+Route::prefix('admin')->name('admin.')->middleware('isAdmin')->group(function () {
+    Route::get('panel', [Dashboard::class, 'index'])->name('dashboard');
+    Route::get('cikis', [AuthController::class, 'logout'])->name('logout');
+});
 /*
 |--------------------------------------------------------------------------
 | Front Web Routes
