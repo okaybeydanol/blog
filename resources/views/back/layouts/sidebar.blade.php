@@ -9,45 +9,11 @@
         <nav id="sidebar">
             <div class="shadow-bottom"></div>
 
+
             <ul class="list-unstyled menu-categories" id="accordionExample">
                 <li class="menu">
-                    <a href="#starter-kit" data-active="true" data-toggle="collapse" aria-expanded="true"
-                        class="dropdown-toggle">
-                        <div class="">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" class="feather feather-terminal">
-                                <polyline points="4 17 10 11 4 5"></polyline>
-                                <line x1="12" y1="19" x2="20" y2="19"></line>
-                            </svg>
-                            <span>Starter Kit</span>
-                        </div>
-                        <div>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" class="feather feather-chevron-right">
-                                <polyline points="9 18 15 12 9 6"></polyline>
-                            </svg>
-                        </div>
-                    </a>
-                    <ul class="submenu list-unstyled collapse show" id="starter-kit" data-parent="#accordionExample">
-                        <li class="active">
-                            <a href="starter_kit_blank_page.html"> Blank Page </a>
-                        </li>
-                        <li>
-                            <a href="starter_kit_breadcrumbs.html"> Breadcrumbs </a>
-                        </li>
-                        <li>
-                            <a href="starter_kit_boxed.html"> Boxed </a>
-                        </li>
-                        <li>
-                            <a href="starter_kit_alt_menu.html"> Alternate Menu </a>
-                        </li>
-                    </ul>
-                </li>
-
-                <li class="menu">
-                    <a href="javascript:void(0);" aria-expanded="false" class="dropdown-toggle">
+                    <a href="{{ route('admin.dashboard') }}" @if (Request::segment(2)=='panel' ) data-active="true"
+                        @endif aria-expanded="false" class="dropdown-toggle">
                         <div class="">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -55,22 +21,23 @@
                                 <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                                 <polyline points="9 22 9 12 15 12 15 22"></polyline>
                             </svg>
-                            <span> Menu 1</span>
+                            <span>Panel</span>
                         </div>
                     </a>
                 </li>
-
                 <li class="menu">
-                    <a href="#submenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                    <a href="#submenu" @if (Request::segment(2)=='makaleler' ) data-active="true" @endif
+                        data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                         <div class="">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" class="feather feather-airplay">
-                                <path d="M5 17H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-1">
-                                </path>
-                                <polygon points="12 15 17 21 7 21 12 15"></polygon>
+                                stroke-linejoin="round" class="feather feather-pen-tool">
+                                <path d="M12 19l7-7 3 3-7 7-3-3z"></path>
+                                <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path>
+                                <path d="M2 2l7.586 7.586"></path>
+                                <circle cx="11" cy="11" r="2"></circle>
                             </svg>
-                            <span> Menu 2</span>
+                            <span>Makaleler</span>
                         </div>
                         <div>
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -80,26 +47,31 @@
                             </svg>
                         </div>
                     </a>
-                    <ul class="collapse submenu list-unstyled" id="submenu" data-parent="#accordionExample">
-                        <li>
-                            <a href="javascript:void(0);"> Submenu 1 </a>
+                    <ul class="@if (Request::segment(2)=='makaleler')
+                    submenu list-unstyled collapse show
+                    @endif collapse submenu list-unstyled" id="submenu" data-parent="#accordionExample">
+                        <li @if (Request::segment(2)=='makaleler' && Request::segment(3)==NULL) class="active" @endif>
+                            <a href=" {{ route('admin.makaleler.index') }}">Tüm Makaleler</a>
                         </li>
-                        <li>
-                            <a href="javascript:void(0);"> Submenu 2 </a>
+                        <li @if (Request::segment(2)=='makaleler' && Request::segment(3)=='create' ) class="active"
+                            @endif>
+                            <a href="{{ route('admin.makaleler.create') }}">Makale Oluştur</a>
                         </li>
                     </ul>
                 </li>
-
                 <li class="menu">
-                    <a href="#submenu2" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                    <a href="#a" data-active="true" data-toggle="collapse" aria-expanded="false"
+                        class="dropdown-toggle">
                         <div class="">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" class="feather feather-file">
-                                <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path>
-                                <polyline points="13 2 13 9 20 9"></polyline>
+                                stroke-linejoin="round" class="feather feather-pen-tool">
+                                <path d="M12 19l7-7 3 3-7 7-3-3z"></path>
+                                <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path>
+                                <path d="M2 2l7.586 7.586"></path>
+                                <circle cx="11" cy="11" r="2"></circle>
                             </svg>
-                            <span> Menu 3</span>
+                            <span>Makaleler</span>
                         </div>
                         <div>
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -109,29 +81,12 @@
                             </svg>
                         </div>
                     </a>
-                    <ul class="collapse submenu list-unstyled" id="submenu2" data-parent="#accordionExample">
-                        <li>
-                            <a href="javascript:void(0);"> Submenu 1 </a>
+                    <ul class="submenu list-unstyled collapse show" id="a" data-parent="#accordionExample">
+                        <li class="active">
+                            <a href=" {{ route('admin.makaleler.index') }}">Tüm Makaleler</a>
                         </li>
                         <li>
-                            <a href="#sm2" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                                Submenu 2 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                    stroke-linecap="round" stroke-linejoin="round"
-                                    class="feather feather-chevron-right">
-                                    <polyline points="9 18 15 12 9 6"></polyline>
-                                </svg> </a>
-                            <ul class="collapse list-unstyled sub-submenu" id="sm2" data-parent="#submenu2">
-                                <li>
-                                    <a href="javascript:void(0);"> Sub-Submenu 1 </a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0);"> Sub-Submenu 2 </a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0);"> Sub-Submenu 3 </a>
-                                </li>
-                            </ul>
+                            <a href="javascript:void(0);"> Submenu 2 </a>
                         </li>
                     </ul>
                 </li>
@@ -146,3 +101,4 @@
             <div class="row layout-top-spacing" id="cancel-row">
                 <div class="col-xl-12 col-lg-12 col-md-12">
                     <div class="widget-content widget-content-area">
+                        @yield('baslik')

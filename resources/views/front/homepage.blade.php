@@ -92,7 +92,7 @@
         <div class="entry-content">
             <div class="ecae" style="">
                 <p>
-                    {{ Str::limit($article->content, 500) }}
+                    {!! Str::limit($article->content, 500) !!}
                 </p>
                 <span class="ecae-button ecae-buttonskin-black" style="text-align:right">
                     <a class="ecae-link" href="{{ route('single' ,$article->slug ) }}">

@@ -15,8 +15,25 @@
 
                     <nav class="breadcrumb-one" aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="javascript:void(0);">Starter Kit</a></li>
-                            <li class="breadcrumb-item active" aria-current="page"><span>Breadcrumbs</span></li>
+
+
+
+                            @for($i = 2; $i <= count(Request::segments()); $i++) @if($i < count(Request::segments()) &
+                                $i> 0)
+                                @php
+                                $a = Request::segment($i);
+                                @endphp
+                                <li class="breadcrumb-item"><a
+                                        href="/admin/{{ Request::segment($i)}}">{{ ucwords(Request::segment($i))}}</a>
+                                </li>
+
+
+                                @else <li class="breadcrumb-item active" aria-current="page">
+                                    <span>{{ucwords(str_replace('-',' ',Request::segment($i)))}}</span></li>
+                                @endif
+                                @endfor
+
+
                         </ol>
                     </nav>
 

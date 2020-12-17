@@ -80,7 +80,7 @@
     ​<picture class="featured-media img-fluid">
         <div class="featured-media-inner section-inner medium">
             <div class="featured-video-plus post-thumbnail fvp-responsive fvp-center">
-                <img src="{{ $article->article->image }}" class="img-fluid img-thumbnail" alt="..." width="1200px">
+                <img src="../{{ $article->article->image }}" class="img-fluid img-thumbnail" alt="..." width="1200px">
             </div>
 
         </div>
@@ -93,7 +93,7 @@
         <div class="entry-content">
             <div class="ecae" style="">
                 <p>
-                    {{ Str::limit($article->article->content, 500) }}
+                    {!! Str::limit($article->article->content, 500) !!}
                 </p>
                 <span class="ecae-button ecae-buttonskin-black" style="text-align:right">
                     <a class="ecae-link" href="{{ route('single' ,$article->article->slug ) }}">
