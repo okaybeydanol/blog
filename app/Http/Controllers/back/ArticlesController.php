@@ -26,7 +26,7 @@ class ArticlesController extends Controller
     public function index()
     {
         $data['articles'] = Article::with('category.categoryInfo')->orderBy('id')->get();
-        $data['articles'] = Article::orderBy('id', 'ASC')->get();
+        $data['articles'] = Article::orderBy('id', 'desc')->get();
         return view('back.articles.index', $data);
     }
 
@@ -38,6 +38,10 @@ class ArticlesController extends Controller
     public function create()
     {
         $data['categories'] = Category::get();
+        $data['bread_crumb'][] = array(
+            'url' => route('admin.makaleler.create'),
+            'title' => 'Makale Ekle'
+        );
         return view('back.articles.create', $data);
     }
 
@@ -49,6 +53,12 @@ class ArticlesController extends Controller
      */
     public function store(Request $request)
     {
+
+        $request->validate([
+            'title' => 'min:3',
+            'content' => 'min:50',
+            'image' => 'required|image|mimes:jpeg,png,jpg|max:5120',
+        ]);
         $com = new Article();
         $com->articles_guid =  Str::uuid();
         $com->user_guid =  Auth::guard('web')->user()->name;
@@ -90,7 +100,28 @@ class ArticlesController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data['categories'] = Category::get();
+        $article = Article::where('id', $id)->first();
+        $category = ArticlesCategory::where('articles_guid', $article->articles_guid)->get();
+        foreach ($data['categories'] as $key => $cat) {
+
+            $index = array_search($cat->category_guid, array_column($category->toArray(), 'category_guid'));
+            if ($index !== false) {
+                $cat['selected'] = true;
+            } else {
+                $cat['selected'] = false;
+            }
+        }
+        $data['bread_crumb'][] = array(
+            'url' => route('admin.makaleler.index'),
+            'title' => 'Makaleler'
+        );
+        $data['bread_crumb'][] = array(
+            'url' => route('admin.makaleler.edit', $id),
+            'title' => $article->title
+        );
+        $data['article'] = $article;
+        return view('back.articles.edit', $data);
     }
 
     /**
@@ -102,7 +133,31 @@ class ArticlesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+        $request->validate([
+            'title' => 'min:3',
+            'content' => 'min:50',
+            'image' => 'image|mimes:jpeg,png,jpg|max:5120',
+        ]);
+        $com = Article::findOrFail($id);
+        $com->title =  $request->title;
+        $com->content =  $request->content;
+        $com->slug = Str::slug($request->title);
+        $com->status = $request->status;
+        if ($request->hasFile('image')) {
+            $imageName = Str::slug($request->title) . '.' . $request->image->getClientOriginalExtension();
+            $request->image->move(public_path('uploads'), $imageName);
+            $com->image =  'uploads/' .  $imageName;
+        }
+        $com->save();
+        $c = ArticlesCategory::where('articles_guid', $com->articles_guid)->delete();
+        foreach ($request->categories as $category) {
+            $aC = new ArticlesCategory();
+            $aC->category_guid = $category;
+            $aC->articles_guid = $com->articles_guid;
+            $aC->save();
+        }
+        return redirect()->route('admin.makaleler.index');
     }
 
     /**

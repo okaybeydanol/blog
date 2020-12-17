@@ -1,8 +1,8 @@
 @extends('back.layouts.master')
 <!--  BEGIN CONTENT PART  -->
-@section('title','Makale Oluştur')
+@section('title',$article->title . 'Makalesini Düzenle')
 @section('baslik')
-<h4>Makale Oluştur</h4>
+<h4>Makale Düzenle</h4>
 @endsection
 
 @section('content')
@@ -21,16 +21,29 @@
         @endforeach
         @endif
         <br />
-        <form method="post" action="{{ route('admin.makaleler.store') }}" enctype="multipart/form-data">
+        <form method="post" action="{{ route('admin.makaleler.update',$article->id) }}" enctype="multipart/form-data">
+            @method('PUT')
             @csrf
             <div class="form-group">
+                <label class="mb-4" for="aktifpasif">Makale Onayı</label>
+                <select class="mb-4 form-control" name="status" id="aktifpasif">
+                    <option @if ($article->status != 1)
+                        selected
+                        @endif value="0">Pasif</option>
+                    <option @if ($article->status != 0)
+                        selected
+                        @endif value="1">Aktif</option>
+                </select>
                 <label class="mb-4" for="t-text">Başlık</label>
-                <input id="t-text" type="text" name="title" placeholder="Yazı..." class="form-control mb-4" required="">
+                <input id="t-text" type="text" name="title" placeholder="Yazı..." value="{{ $article->title }}"
+                    class="form-control mb-4" required="">
                 <label class="mb-4" for="t-cate">Kategori</label>
                 <select id="t-cate" name="categories[]" class="form-control tagging" multiple="multiple">
                     @foreach ($categories as $category)
-                    <option value="{{ $category->category_guid }}">{{ $category->name }}</option>
+                    <option @if($category->selected == true) selected @endif
+                        value="{{ $category->category_guid }}">{{ $category->name }}</option>
                     @endforeach
+
                 </select>
 
 
@@ -38,16 +51,16 @@
                     <label>Resim Yükleme(Tek Dosya) <a href="javascript:void(0)"
                             class="custom-file-container__image-clear" title="Clear Image">x</a></label>
                     <label class="custom-file-container__custom-file">
-                        <input name="image" type="file" class="custom-file-container__custom-file__custom-file-input"
-                            accept="image/*">
+                        <input name="image" id="input-file" type="file"
+                            class="custom-file-container__custom-file__custom-file-input" accept="image/*">
                         <span class="custom-file-container__custom-file__custom-file-control"></span>
                     </label>
-                    <div class="custom-file-container__image-preview"></div>
+                    <div id="test" class="custom-file-container__image-preview"></div>
                 </div>
                 <label class="mb-4" for="t-text">Makale İçeriği</label>
-                <textarea name="content" id="asd" name="editordata"></textarea>
+                <textarea name="content" id="asd" name="editordata">{{ $article->content }}</textarea>
             </div>
-            <button type="submit" class="btn btn-outline-primary btn-rounded btn-block mb-2">MAKALE OLUŞTUR</button>
+            <button type="submit" class="btn btn-outline-primary btn-rounded btn-block mb-2">MAKALE GÜNCELLE</button>
 
         </form>
 
@@ -76,11 +89,21 @@
 <!--  BEGIN CUSTOM SCRIPTS FILE  -->
 
 <script>
-    $(".tagging").select2({
-    tags: true
-});
+    const test = document.getElementById('test');
+    var reader = new FileReader();
+    fetch('{{ asset($article->image) }}')
+        .then((response) => response.blob())
+        .then((r)=>{
+            reader.readAsDataURL(r);
+            reader.onload = function(e) {
+                test.setAttribute('style', `background-image: url("${reader.result}")` );
+            };
+        });
 </script>
 <script>
+    $(".tagging").select2({
+            tags: true
+        });
     $(document).ready(function() {
   $('#asd').summernote(
       {'height':400,
@@ -97,7 +120,6 @@
     var firstUpload = new FileUploadWithPreview('myFirstImage')
     //Second upload
     var secondUpload = new FileUploadWithPreview('mySecondImage')
-
 
 </script>
 @endsection

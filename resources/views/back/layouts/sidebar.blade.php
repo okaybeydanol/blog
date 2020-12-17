@@ -1,3 +1,6 @@
+@php
+$routename = \Request::route()->getName();
+@endphp
 <div class="main-container" id="container">
 
     <div class="overlay"></div>
@@ -12,7 +15,7 @@
 
             <ul class="list-unstyled menu-categories" id="accordionExample">
                 <li class="menu">
-                    <a href="{{ route('admin.dashboard') }}" @if (Request::segment(2)=='panel' ) data-active="true"
+                    <a href="{{ route('admin.dashboard') }}" @if ($routename=='admin.dashboard' ) data-active="true"
                         @endif aria-expanded="false" class="dropdown-toggle">
                         <div class="">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -26,8 +29,9 @@
                     </a>
                 </li>
                 <li class="menu">
-                    <a href="#submenu" @if (Request::segment(2)=='makaleler' ) data-active="true" @endif
-                        data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                    <a href="#submenu" @if ($routename=='admin.makaleler.index' || $routename=='admin.makaleler.create'
+                        || $routename=='admin.makaleler.edit' ) data-active="true" @endif data-toggle="collapse"
+                        aria-expanded="false" class="dropdown-toggle">
                         <div class="">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -47,46 +51,14 @@
                             </svg>
                         </div>
                     </a>
-                    <ul class="@if (Request::segment(2)=='makaleler')
-                    submenu list-unstyled collapse show
+                    <ul class="@if ($routename =='admin.makaleler.index' || $routename =='admin.makaleler.create' || $routename =='admin.makaleler.edit' )  show
                     @endif collapse submenu list-unstyled" id="submenu" data-parent="#accordionExample">
-                        <li @if (Request::segment(2)=='makaleler' && Request::segment(3)==NULL) class="active" @endif>
+                        <li @if ($routename=='admin.makaleler.index' || $routename=='admin.makaleler.edit' )
+                            class="active" @endif>
                             <a href=" {{ route('admin.makaleler.index') }}">Tüm Makaleler</a>
                         </li>
-                        <li @if (Request::segment(2)=='makaleler' && Request::segment(3)=='create' ) class="active"
-                            @endif>
+                        <li @if ($routename=='admin.makaleler.create' ) class="active" @endif>
                             <a href="{{ route('admin.makaleler.create') }}">Makale Oluştur</a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="menu">
-                    <a href="#a" data-active="true" data-toggle="collapse" aria-expanded="false"
-                        class="dropdown-toggle">
-                        <div class="">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" class="feather feather-pen-tool">
-                                <path d="M12 19l7-7 3 3-7 7-3-3z"></path>
-                                <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path>
-                                <path d="M2 2l7.586 7.586"></path>
-                                <circle cx="11" cy="11" r="2"></circle>
-                            </svg>
-                            <span>Makaleler</span>
-                        </div>
-                        <div>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" class="feather feather-chevron-right">
-                                <polyline points="9 18 15 12 9 6"></polyline>
-                            </svg>
-                        </div>
-                    </a>
-                    <ul class="submenu list-unstyled collapse show" id="a" data-parent="#accordionExample">
-                        <li class="active">
-                            <a href=" {{ route('admin.makaleler.index') }}">Tüm Makaleler</a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0);"> Submenu 2 </a>
                         </li>
                     </ul>
                 </li>

@@ -15,25 +15,20 @@
 
                     <nav class="breadcrumb-one" aria-label="breadcrumb">
                         <ol class="breadcrumb">
-
-
-
-                            @for($i = 2; $i <= count(Request::segments()); $i++) @if($i < count(Request::segments()) &
-                                $i> 0)
-                                @php
-                                $a = Request::segment($i);
-                                @endphp
-                                <li class="breadcrumb-item"><a
-                                        href="/admin/{{ Request::segment($i)}}">{{ ucwords(Request::segment($i))}}</a>
-                                </li>
-
-
-                                @else <li class="breadcrumb-item active" aria-current="page">
-                                    <span>{{ucwords(str_replace('-',' ',Request::segment($i)))}}</span></li>
-                                @endif
-                                @endfor
-
-
+                            @if (!isset($bread_crumb))
+                            <li class="breadcrumb-item">
+                                <a href="{!! route('admin.dashboard') !!}">Dashboard</a>
+                            </li>
+                            @elseif(is_array($bread_crumb))
+                            @foreach ($bread_crumb as $key => $crumb)
+                            <li class="breadcrumb-item">
+                                <a href="{!! $crumb['url'] !!}">{!! $crumb['title'] !!}</a>
+                            </li>
+                            @endforeach
+                            @else
+                            <li class="breadcrumb-item active" aria-current="page">
+                                <span>{!! $bread_crumb !!}</span></li>
+                            @endif
                         </ol>
                     </nav>
 

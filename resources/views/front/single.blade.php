@@ -73,7 +73,7 @@
         ​<picture class="featured-media img-fluid">
             <div class="featured-media-inner section-inner medium">
                 <div class="featured-video-plus post-thumbnail fvp-responsive fvp-center">
-                    <img src="../{{ $article->image }}" class="img-fluid img-thumbnail" alt="..." width="1200px">
+                    <img src="{{ asset($article->image) }}" class="img-fluid img-thumbnail" alt="..." width="1200px">
                 </div>
 
             </div>
@@ -86,10 +86,10 @@
                 <p>
                     {!! $article->content !!}
                 </p>
-                </br>
-                </br>
-                </br>
-                </br>
+                <br />
+                <br />
+                <br />
+                <br />
                 <span style="font-size: 20px;float:right;">Okunma Sayısı:
                     <b>{{ $article->hit }}</b></span>
             </div>
@@ -101,16 +101,16 @@
     <nav class="pagination-single section-inner" aria-label="Gönderi" role="navigation">
         <hr class="styled-separator is-style-wide" aria-hidden="true" />
         <div class="pagination-single-inner">
-            @if ($article_p)
-            <a class="previous-post" href="{{ route('single' ,$article_p->slug ) }}">
+            @if ($article_next)
+            <a class="previous-post" href="{{ route('single' ,$article_next->slug ) }}">
                 <span class="arrow" aria-hidden="true">&larr;</span>
-                <span class="title"><span class="title-inner">{{$article_p->title}}</span></span>
+                <span class="title"><span class="title-inner">{{$article_next->title}}</span></span>
             </a>
             @endif
-            @if ($article_next)
-            <a class="next-post" href="{{ route('single' ,$article_next->slug ) }}">
+            @if ($article_p)
+            <a class="next-post" href="{{ route('single' ,$article_p->slug ) }}">
                 <span class="arrow" aria-hidden="true">&rarr;</span>
-                <span class="title"><span class="title-inner">{{$article_next->title}}</span></span>
+                <span class="title"><span class="title-inner">{{$article_p->title}}</span></span>
             </a>
             @endif
 

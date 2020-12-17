@@ -20,7 +20,7 @@
                     </a>
                 </li>
                 <li class="nav-item theme-text">
-                    <a href="index.html" class="nav-link">Yönetim Paneli </a>
+                    <a href="{{ route('admin.dashboard') }}" class="nav-link">Yönetim Paneli </a>
                 </li>
             </ul>
 
