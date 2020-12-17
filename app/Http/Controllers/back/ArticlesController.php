@@ -166,8 +166,15 @@ class ArticlesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function sil($id)
     {
-        //
+        $data['articles'] = Article::where('id', $id)->first();
+        if ($data['articles']) {
+            $a = Article::where('id', $id)->delete();
+            $c = ArticlesCategory::where('articles_guid', $data['articles']->articles_guid)->delete();
+            return redirect()->route('admin.makaleler.index');
+        } else {
+            return redirect()->route('admin.makaleler.index');
+        }
     }
 }

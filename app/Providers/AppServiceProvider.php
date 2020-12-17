@@ -26,7 +26,8 @@ class AppServiceProvider extends ServiceProvider
     {
         Route::resourceVerbs([
             'create' => 'olustur',
-            'edit' => 'duzenle'
+            'edit' => 'duzenle',
+            'destroy' => 'sil'
         ]);
     }
 }

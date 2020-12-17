@@ -31,6 +31,7 @@ Route::prefix('admin')->name('admin.')->middleware('isLogin')->group(function ()
 
 Route::prefix('admin')->name('admin.')->middleware('isAdmin')->group(function () {
     Route::get('panel', [Dashboard::class, 'index'])->name('dashboard');
+    Route::post('makaleler/sil/{id}', [ArticlesController::class, 'sil'])->name('sil');
     Route::resource('makaleler', ArticlesController::class);
     Route::get('cikis', [AuthController::class, 'logout'])->name('logout');
 });
