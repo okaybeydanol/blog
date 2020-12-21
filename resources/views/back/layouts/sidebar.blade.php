@@ -62,6 +62,41 @@ $routename = \Request::route()->getName();
                         </li>
                     </ul>
                 </li>
+                <li class="menu">
+                    <a href="#kategori" @if ($routename=='admin.kategoriler.index' ||
+                        $routename=='admin.kategoriler.create' || $routename=='admin.kategoriler.edit' )
+                        data-active="true" @endif data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <div class="">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="feather feather-codepen">
+                                <polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2"></polygon>
+                                <line x1="12" y1="22" x2="12" y2="15.5"></line>
+                                <polyline points="22 8.5 12 15.5 2 8.5"></polyline>
+                                <polyline points="2 15.5 12 8.5 22 15.5"></polyline>
+                                <line x1="12" y1="2" x2="12" y2="8.5"></line>
+                            </svg>
+                            <span>Kategoriler</span>
+                        </div>
+                        <div>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="feather feather-chevron-right">
+                                <polyline points="9 18 15 12 9 6"></polyline>
+                            </svg>
+                        </div>
+                    </a>
+                    <ul class="@if ($routename =='admin.kategoriler.index' || $routename =='admin.kategoriler.create' || $routename =='admin.kategoriler.edit' )  show
+                    @endif collapse submenu list-unstyled" id="kategori" data-parent="#accordionExample">
+                        <li @if ($routename=='admin.kategoriler.index' || $routename=='admin.kategoriler.edit' )
+                            class="active" @endif>
+                            <a href=" {{ route('admin.kategoriler.index') }}">Tüm Kategoriler</a>
+                        </li>
+                        <li @if ($routename=='admin.kategoriler.create' ) class="active" @endif>
+                            <a href="{{ route('admin.kategoriler.create') }}">Kategori Oluştur</a>
+                        </li>
+                    </ul>
+                </li>
             </ul>
 
         </nav>

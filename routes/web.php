@@ -6,6 +6,7 @@ use App\Http\Controllers\back\AuthController;
 use App\Http\Controllers\front\Homepage;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\back\ArticlesController;
+use App\Http\Controllers\back\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,8 +32,10 @@ Route::prefix('admin')->name('admin.')->middleware('isLogin')->group(function ()
 
 Route::prefix('admin')->name('admin.')->middleware('isAdmin')->group(function () {
     Route::get('panel', [Dashboard::class, 'index'])->name('dashboard');
-    Route::post('makaleler/sil/{id}', [ArticlesController::class, 'sil'])->name('sil');
+    Route::any('makaleler/sil/{id}', [ArticlesController::class, 'sil'])->name('makaleler.sil');
+    Route::any('kategoriler/sil/{id}', [CategoryController::class, 'sil'])->name('kategoriler.sil');
     Route::resource('makaleler', ArticlesController::class);
+    Route::resource('kategoriler', CategoryController::class);
     Route::get('cikis', [AuthController::class, 'logout'])->name('logout');
 });
 /*

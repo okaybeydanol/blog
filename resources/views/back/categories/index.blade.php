@@ -1,8 +1,8 @@
 @extends('back.layouts.master')
 <!--  BEGIN CONTENT PART  -->
-@section('title','Tüm Makaleler')
+@section('title','Tüm Kategoriler')
 @section('baslik')
-<h4>Tüm Makaleler</h4>
+<h4>Tüm Kategoriler</h4>
 @endsection
 @section('content')
 
@@ -10,44 +10,22 @@
     <table id="zero-config" class="table table-hover" style="width:100%">
         <thead>
             <tr>
-                <th>Resim</th>
-                <th>Başlık</th>
-                <th>Kategori</th>
+                <th>Kategori Adı</th>
+                <th>Kategori Link</th>
                 <th>Oluşturma Tarihi</th>
-                <th>G. Sayısı</th>
-                <th>Durum</th>
                 <th class="no-content">Aksiyon</th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($articles as $article)
+            @foreach ($categories as $category)
             <tr>
-                <td><img src="../{{ $article->image }}" alt="" width="220px" height="120px"></td>
-                <td>{{ Str::limit($article->title,'40') }}</td>
-                <td>
-
-                    @foreach ($article->category as $key => $category)
-                    <a href="{{ route('category',$category->categoryInfo->slug) }}"
-                        rel="category tag">{{  $category->categoryInfo->name }}</a>
-
-                    @if($key + 1 !== count($article->category))
-                    /
-                    @endif
-                    @endforeach
-                </td>
-                <td>{{ $article->created_at->format('d/m/Y')}}</td>
-                <td>{{ $article->hit }}</td>
-                <td>@if ($article->status != 0)
-                    <span class="text-info">Aktif</span>
-                    @else
-                    <span class="text-danger">Pasif</span>
-                    @endif
-
-                </td>
+                <td>{{ $category->name }}</td>
+                <td>{{ $category->slug }}</td>
+                <td>{{ $category->created_at->format('d/m/Y')}}</td>
                 <td>
                     <ul class="table-controls">
                         <li>
-                            <a href="{{ route('admin.makaleler.edit',$article->id) }}" data-toggle="tooltip"
+                            <a href="{{ route('admin.kategoriler.edit',$category->id) }}" data-toggle="tooltip"
                                 data-placement="top" title="" data-original-title="Edit">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -57,7 +35,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('admin.makaleler.sil',$article->id) }}" data-toggle="tooltip"
+                            <a href="{{ route('admin.kategoriler.sil',$category->id) }}" data-toggle="tooltip"
                                 data-placement="top" title="" data-original-title="Delete">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"

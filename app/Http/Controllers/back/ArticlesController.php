@@ -139,7 +139,7 @@ class ArticlesController extends Controller
             'content' => 'min:50',
             'image' => 'image|mimes:jpeg,png,jpg|max:5120',
         ]);
-        $com = Article::findOrFail($id);
+        $com = Article::where('id', $id)->first();
         $com->title =  $request->title;
         $com->content =  $request->content;
         $com->slug = Str::slug($request->title);

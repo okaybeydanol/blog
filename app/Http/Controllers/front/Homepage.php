@@ -41,7 +41,7 @@ class Homepage extends Controller
         $data['pages'] = Page::orderBy('order', 'asc')->get();
         $data['categories'] = Category::withCount('article')->get();
         $data['category_page'] = Category::where('slug', $slug)->first() ?? abort(404);
-        $data['articlesCategory'] = ArticlesCategory::where('category_guid', $data['category_page']->category_guid)->orderBy('id', 'asc')->with('article')->paginate(2) ?? abort(404);
+        $data['articlesCategory'] = ArticlesCategory::where('category_guid', $data['category_page']->category_guid)->orderBy('id', 'desc')->with('article')->paginate(2) ?? abort(404);
         return view('front.category', $data);
     }
 
